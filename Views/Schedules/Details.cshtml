@@ -1,0 +1,58 @@
+﻿@model MYFITNESSAPP.Models.Schedule
+
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Schedule</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ScheduleDay)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ScheduleDay)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ScheduleStartTime)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ScheduleStartTime)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ScheduleEndTime)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ScheduleEndTime)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TrainingType.TrainingName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TrainingType.TrainingName)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ScheduleID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

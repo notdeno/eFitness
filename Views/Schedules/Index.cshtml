@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MYFITNESSAPP.Models.Schedule>
+
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <br />
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ScheduleDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScheduleStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScheduleEndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingType.TrainingName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScheduleDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScheduleStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScheduleEndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingType.TrainingName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ScheduleID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ScheduleID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ScheduleID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

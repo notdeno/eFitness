@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MYFITNESSAPPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleID" />
+          </Key>
+          <Property Name="ScheduleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScheduleTrainingTypeID" Type="int" Nullable="false" />
+          <Property Name="ScheduleDay" Type="datetime" Nullable="false" />
+          <Property Name="ScheduleStartTime" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ScheduleEndTime" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trainer">
+          <Key>
+            <PropertyRef Name="TrainerID" />
+          </Key>
+          <Property Name="TrainerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainerFullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TrainerPhone" Type="nvarchar" MaxLength="50" />
+          <Property Name="TrainerEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="TrainerBio" Type="text" />
+          <Property Name="TrainerPhoto" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TrainingType">
+          <Key>
+            <PropertyRef Name="TrainingTypeID" />
+          </Key>
+          <Property Name="TrainingTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainingName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TrainingDesc" Type="text" />
+          <Property Name="TrainingPhoto" Type="varbinary(max)" />
+          <Property Name="TrainingTrainerID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Schedule_TrainingType">
+          <End Role="TrainingType" Type="Self.TrainingType" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TrainingType">
+              <PropertyRef Name="TrainingTypeID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="ScheduleTrainingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainingType_Trainer">
+          <End Role="Trainer" Type="Self.Trainer" Multiplicity="1" />
+          <End Role="TrainingType" Type="Self.TrainingType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainer">
+              <PropertyRef Name="TrainerID" />
+            </Principal>
+            <Dependent Role="TrainingType">
+              <PropertyRef Name="TrainingTrainerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MYFITNESSAPPModelStoreContainer">
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trainer" EntityType="Self.Trainer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrainingType" EntityType="Self.TrainingType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Schedule_TrainingType" Association="Self.FK_Schedule_TrainingType">
+            <End Role="TrainingType" EntitySet="TrainingType" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainingType_Trainer" Association="Self.FK_TrainingType_Trainer">
+            <End Role="Trainer" EntitySet="Trainer" />
+            <End Role="TrainingType" EntitySet="TrainingType" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MYFITNESSAPPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleID" />
+          </Key>
+          <Property Name="ScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScheduleTrainingTypeID" Type="Int32" Nullable="false" />
+          <Property Name="ScheduleDay" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ScheduleStartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ScheduleEndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TrainingType" Relationship="Self.FK_Schedule_TrainingType" FromRole="Schedule" ToRole="TrainingType" />
+        </EntityType>
+        <EntityType Name="Trainer">
+          <Key>
+            <PropertyRef Name="TrainerID" />
+          </Key>
+          <Property Name="TrainerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainerFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TrainerPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TrainerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TrainerBio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TrainerPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="TrainingType" Relationship="Self.FK_TrainingType_Trainer" FromRole="Trainer" ToRole="TrainingType" />
+        </EntityType>
+        <EntityType Name="TrainingType">
+          <Key>
+            <PropertyRef Name="TrainingTypeID" />
+          </Key>
+          <Property Name="TrainingTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainingName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TrainingDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TrainingPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="TrainingTrainerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_Schedule_TrainingType" FromRole="TrainingType" ToRole="Schedule" />
+          <NavigationProperty Name="Trainer" Relationship="Self.FK_TrainingType_Trainer" FromRole="TrainingType" ToRole="Trainer" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Schedule_TrainingType">
+          <End Role="TrainingType" Type="Self.TrainingType" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TrainingType">
+              <PropertyRef Name="TrainingTypeID" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="ScheduleTrainingTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainingType_Trainer">
+          <End Role="Trainer" Type="Self.Trainer" Multiplicity="1" />
+          <End Role="TrainingType" Type="Self.TrainingType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainer">
+              <PropertyRef Name="TrainerID" />
+            </Principal>
+            <Dependent Role="TrainingType">
+              <PropertyRef Name="TrainingTrainerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MYFITNESSAPPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" />
+          <EntitySet Name="Trainer" EntityType="Self.Trainer" />
+          <EntitySet Name="TrainingType" EntityType="Self.TrainingType" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Schedule_TrainingType" Association="Self.FK_Schedule_TrainingType">
+            <End Role="TrainingType" EntitySet="TrainingType" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainingType_Trainer" Association="Self.FK_TrainingType_Trainer">
+            <End Role="Trainer" EntitySet="Trainer" />
+            <End Role="TrainingType" EntitySet="TrainingType" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MYFITNESSAPPModelStoreContainer" CdmEntityContainer="MYFITNESSAPPEntities">
+          <EntitySetMapping Name="Schedule">
+            <EntityTypeMapping TypeName="MYFITNESSAPPModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+                <ScalarProperty Name="ScheduleTrainingTypeID" ColumnName="ScheduleTrainingTypeID" />
+                <ScalarProperty Name="ScheduleDay" ColumnName="ScheduleDay" />
+                <ScalarProperty Name="ScheduleStartTime" ColumnName="ScheduleStartTime" />
+                <ScalarProperty Name="ScheduleEndTime" ColumnName="ScheduleEndTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainer">
+            <EntityTypeMapping TypeName="MYFITNESSAPPModel.Trainer">
+              <MappingFragment StoreEntitySet="Trainer">
+                <ScalarProperty Name="TrainerID" ColumnName="TrainerID" />
+                <ScalarProperty Name="TrainerFullName" ColumnName="TrainerFullName" />
+                <ScalarProperty Name="TrainerPhone" ColumnName="TrainerPhone" />
+                <ScalarProperty Name="TrainerEmail" ColumnName="TrainerEmail" />
+                <ScalarProperty Name="TrainerBio" ColumnName="TrainerBio" />
+                <ScalarProperty Name="TrainerPhoto" ColumnName="TrainerPhoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrainingType">
+            <EntityTypeMapping TypeName="MYFITNESSAPPModel.TrainingType">
+              <MappingFragment StoreEntitySet="TrainingType">
+                <ScalarProperty Name="TrainingTypeID" ColumnName="TrainingTypeID" />
+                <ScalarProperty Name="TrainingName" ColumnName="TrainingName" />
+                <ScalarProperty Name="TrainingDesc" ColumnName="TrainingDesc" />
+                <ScalarProperty Name="TrainingPhoto" ColumnName="TrainingPhoto" />
+                <ScalarProperty Name="TrainingTrainerID" ColumnName="TrainingTrainerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MYFITNESSAPPModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MYFITNESSAPP.Models.TrainingType>
+
+@{
+    //Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <br />
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingPhoto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Trainer.TrainerFullName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrainingPhoto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Trainer.TrainerFullName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TrainingTypeID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.TrainingTypeID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.TrainingTypeID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>
